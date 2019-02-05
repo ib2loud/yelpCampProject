@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 })); //Set up body-parser
 
-app.use(express.static("public")); //Set static folder for assets
+app.use(express.static(__dirname + "/public")); //Set static folder for assets
 app.set("view engine", "ejs"); //Set rendering image
 app.use(expressSanitizer()); //prevent HTML in input
 
