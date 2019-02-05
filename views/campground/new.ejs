@@ -1,0 +1,24 @@
+<!-- Header File -->
+<% include ../partials/header %>
+<!-- Header File -->
+<div class="container text-center p-2">
+    <h1 class="text-center p-2 headFoot"> Add Campground </h1>
+    <p>Add a new campground to our database</p>
+    <div class="container newCampgroundForm">
+        <form action="/campgrounds" encType="multipart/form-data" method="POST">
+            <p>
+                <input class="form-control" type="text" name="name" placeholder="Name" maxlength="40" required>
+                <input class="form-control" type="text" name="location" placeholder="Location (City, State)" maxlength="40"
+                    required>
+                <input class="form-control" type="number" name="price" placeholder="Price" maxlength="8">
+                <textarea class="form-control" name="information" placeholder="Information" rows="8"></textarea>
+                <!-- <input class="form-control" type="text" name="campground[image]" placeholder="Image URL"> -->
+                Upload Image: <input type="file" name="image">
+            </p>
+            <button class="button btn-sm btn-dark btn-block">Submit!</button>
+        </form>
+    </div>
+</div>
+<!-- Footer File -->
+<% include ../partials/footer %>
+<!-- Footer File -->

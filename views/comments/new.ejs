@@ -1,0 +1,27 @@
+<!-- Header File -->
+<% include ../partials/header %>
+<!-- Header File -->
+<div class="container text-center p-2">
+    <h1 class="text-center p-2 headFoot"> Add Comment to
+        <%=campground.name%>
+    </h1>
+    <p>Add a comment or review</p>
+    <div class="container newCampgroundForm">
+        <form action="/campgrounds/<%=campground._id%>/comments" method="POST">
+            <p>
+                <input class="form-control" type="text" name="comment[author]" placeholder="Name" maxlength="40"
+                    required>
+                <textarea class="form-control" name="comment[text]" placeholder="Comment" rows="8" required></textarea>
+            </p>
+            <button class="button btn-sm btn-dark btn-block">Submit!</button>
+        </form>
+        <hr>
+        <form action="/campgrounds/<%= campground._id %>" method="GET">
+            <button class=" button btn.sm btn-dark btn-block">Back</button>
+        </form>
+
+    </div>
+</div>
+<!-- Footer File -->
+<% include ../partials/footer %>
+<!-- Footer File -->

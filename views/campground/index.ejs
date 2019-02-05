@@ -1,0 +1,37 @@
+<!-- Header File -->
+<% include ../partials/header %>
+<!-- Header File -->
+
+<div class="container text-center mt-5">
+    <header>
+        <h1 class="text-center p-2 headFoot">Sites</h1>
+    </header>
+    <div class="row">
+        <% campgrounds.forEach((campground) => { %>
+        <div class="col-sm-12 col-lg-4">
+            <div class="card mb-3">
+                <img class="card-img-top" src="/files/<%= campground.image %>">
+                <div class="card-title mb-0">
+                    <h4>
+                        <%= campground.name %>
+                    </h4>
+                    <%= campground.location %>
+                    <p class="m-0">
+                        <a href="/campgrounds/<%= campground._id %>" class="btn btn-sm btn-dark mb-2">More Info</a>
+                    </p>
+                    <span class="float-right smallText p-0 mr-1">
+                        <%=campground.views%> views -
+                        <%=campground.comments.length%> comments
+                    </span>
+                </div>
+                <p class="card-text">
+                </p>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+    <p> <a class="btn btn-dark btn-lg" href="/campgrounds/new">Add New Campground</a> </p>
+
+    <!-- Footer File -->
+    <% include ../partials/footer %>
+    <!-- Footer File -->

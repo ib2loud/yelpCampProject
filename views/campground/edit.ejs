@@ -1,0 +1,33 @@
+<!-- Header File -->
+<% include ../partials/header %>
+<!-- Header File -->
+
+<div class="container text-center p-2">
+    <h1 class="text-center p-2 headFoot"> Edit
+        <%= campground.name %>
+    </h1>
+    <p>Edit information below</p>
+    <div class="container newCampgroundForm">
+        <form action="/campgrounds/<%=campground._id%>?_method=PUT" encType="multipart/form-data" method="POST">
+            <p>
+                Name:<input class="form-control" type="text" name="name" value="<%=campground.name%>" maxlength="40">
+                Location:<input class="form-control" type="text" name="location" value="<%=campground.location%>"
+                    maxlength="40">
+                Price:<input class="form-control" type="number" name="price" value="<%=campground.price%>" maxlength="8">
+                Information:<textarea class="form-control" name="information" rows="8"><%=campground.information%></textarea>
+                <!-- Picture:<input class="form-control" type="text" name="campground[image]" value="<%=campground.image%>"> -->
+                <!-- Upload Image: <input type="file" name="image"> -->
+            </p>
+            <button class="button btn-sm btn-dark btn-block">Submit!</button>
+        </form>
+        <hr>
+        <form action="/campgrounds/<%= campground._id %>" method="GET">
+            <button class=" button btn.sm btn-dark btn-block">Back</button>
+        </form>
+
+    </div>
+</div>
+
+<!-- Footer File -->
+<% include ../partials/footer %>
+<!-- Footer File -->

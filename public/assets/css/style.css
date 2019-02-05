@@ -1,0 +1,124 @@
+@font-face {
+    font-family: "amatic";
+    src: url("/assets/css/AmaticSC-Regular.ttf");
+}
+
+@font-face {
+    font-family: "josefin";
+    src: url("/assets/css/JosefinSans-Regular.ttf");
+}
+
+.btn-danger {
+    font-family: "josefin" !important;
+    text-transform: uppercase !important;
+}
+
+body {
+    font-family: "josefin" !important;
+    text-transform: uppercase !important;
+    background-image: url("/assets/images/main_background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+}
+
+.campInfo {
+    background-color: rgba(149, 149, 110, 1) !important;
+
+}
+
+#deleteForm {
+    display: inline;
+}
+
+.info-page-image {
+    width: 100%;
+}
+
+.editDelButtons {
+    bottom: 0;
+    position: absolute;
+}
+
+h1 {
+    font-family: "amatic";
+    font-size: 5rem;
+}
+
+h5 {
+    font-size: .75em;
+}
+
+.landingImage {
+    width: 300px;
+}
+
+#navLogo {
+    height: 1.25em;
+}
+
+.navbar {
+    color: #000000 !important;
+}
+
+.navbar-brand {
+    font-family: "amatic";
+    font-size: 2em;
+}
+
+#commentForm {
+    width: 50%;
+}
+
+.bg-dark {
+    background-color: rgba(149, 149, 110, 1) !important;
+    border-bottom: 2px solid #EFEFEF;
+}
+
+.jumbotron {
+    background-color: rgba(149, 149, 110, .75);
+    border: 2px solid #EFEFEF;
+}
+
+.card {
+    background-color: rgba(149, 149, 110, .5);
+    border: 2px solid #EFEFEF;
+    transition: .25s;
+}
+
+h4 {
+    font-family: "amatic";
+    font-size: 50px;
+    text-shadow: 1px 1px 3px #000000;
+    text-shadow: -1px 0 black 0 1px black 1px 0 black 0 -1px black;
+    color: #EFEFEF;
+    z-index: 2;
+}
+
+.newCampgroundForm {
+    width: 325px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+ul {
+    padding: 0;
+}
+
+.smallText {
+    float: right;
+    font-size: .8em;
+    font-style: italic;
+    text-transform: capitalize;
+}
