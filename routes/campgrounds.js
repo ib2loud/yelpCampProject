@@ -4,7 +4,9 @@ const express = require("express"),
     randomize = require("randomatic"), //To create random folder for image
     expressSanitizer = require("express-sanitizer"),
     Jimp = require("jimp"), //Creating thumbnails for index
-    rimraf = require("rimraf"); //To delete random folder
+    rimraf = require("rimraf"), //To delete random folder
+    User = require("../models/user");
+
 
 router.use(expressSanitizer()); //prevent HTML in input
 
@@ -14,6 +16,7 @@ function isLoggedIn(req, res, next) {
     }
     res.redirect("/login");
 };
+
 
 //Show all campgrounds - INDEX
 router.get("/", (req, res) => {
@@ -34,9 +37,9 @@ router.get("/new", isLoggedIn, (req, res) => {
     res.render("campground/new");
 });
 //Create new campground - CREATE
-router.post("/", (req, res) => {
-    let randomFolder = randomize("Aa0", 15);
-    if (Object.keys(req.files).length == 0) {
+router.post("/", isLoggedIn, (req, res) => {
+    let randomFolder = randomize("Aa0", 15); //Create radom folder to prevent image duplicates
+    if (Object.keys(req.files).length == 0) { //Show default image if none is uploaded
         randomFolder = "/icons/";
         tempImage = "tent.png";
     } else {
@@ -46,13 +49,16 @@ router.post("/", (req, res) => {
             if (err) console.log("error moving file");
         });
         Jimp.read(uploadPath, (err, image) => {
-            if (err) console.log(err);
-            image
-                .scaleToFit(2048, 2048)
-                .write(uploadPath);
-            image
-                .scaleToFit(640, 640)
-                .write(`public/files/${randomFolder}/thumb_${tempImage}`);
+            if (err) {
+                console.log(err);
+            } else {
+                image
+                    .scaleToFit(2048, 2048)
+                    .write(uploadPath);
+                image
+                    .scaleToFit(640, 640)
+                    .write(`public/files/${randomFolder}/thumb_${tempImage}`);
+            }
         });
     }
     let numViews = 0;
@@ -119,21 +125,26 @@ router.put("/:id", (req, res) => {
 });
 
 //Delete a campground - DESTROY
-router.delete("/:id", (req, res) => {
-    //Delete Image Folder unless it's in the icons folder
-    Campground.findById(req.params.id, (err, foundCampground) => {
-        if (foundCampground.randomFolder !== "/icons/") {
-            rimraf(`public/files/${foundCampground.randomFolder}`, (err) => {
-                if (err) console.log(err);
-            });
-        }
-    });
+router.delete("/:id", isLoggedIn, (req, res) => {
 
-    //Delete Database Entry
-    Campground.findOneAndDelete({
-        _id: req.params.id,
-    }, (err) => {
-        res.redirect("/campgrounds");
+    Campground.findById(req.params.id, (err, foundCampground) => {
+        //Check to see user is owner
+        if (foundCampground.owner == req.user.username) {
+            //Delete Image Folder unless it's the icons folder
+            if (foundCampground.randomFolder !== "/icons/") {
+                rimraf(`public/files/${foundCampground.randomFolder}`, (err) => {
+                    if (err) console.log(err);
+                });
+            }
+            //Delete Database Entry
+            Campground.findOneAndDelete({
+                _id: req.params.id,
+            }, (err) => {
+                res.redirect("/campgrounds");
+            });
+        } else {
+            res.send("You shouldn't be here.");
+        }
     });
 });
 

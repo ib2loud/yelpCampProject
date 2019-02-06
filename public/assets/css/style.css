@@ -34,7 +34,7 @@ body {
 }
 
 #mainPage {
-    padding-top: 15vh;
+    padding-top: 10vh;
 }
 
 .campInfo {
@@ -65,7 +65,7 @@ h5 {
 }
 
 .landingImage {
-    width: 300px;
+    width: 100%;
 }
 
 #navLogo {

@@ -2,6 +2,10 @@
 <% include partials/header %>
 <!-- Header File -->
 <div class="container newCampgroundForm">
+    <% if(currentUser) { %>
+    <h4 class="text-center">You are already logged in!</h4>
+    <% } else { %>
+
     <h4 class="text-center">Login</h4>
     <p class="text-center">Please register or login to comment or create new entries to the database.</p>
     <form name="loginForm" action="/login" method="POST">
@@ -14,7 +18,7 @@
 </div>
 
 <body OnLoad="document.loginForm.username.focus();">
-
+    <% }; %>
     <!-- Footer File -->
     <% include partials/footer %>
     <!-- Footer File -->

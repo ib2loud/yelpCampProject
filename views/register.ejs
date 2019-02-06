@@ -1,20 +1,27 @@
 <!-- Header File -->
 <% include partials/header %>
 <!-- Header File -->
+
 <div class="container newCampgroundForm">
+    <% if(currentUser) { %>
+    <h4 class="text-center">You are already logged in!</h4>
+    <% } else { %>
     <h4 class="text-center">Sign up</h4>
     <p class="text-center">Please register or login to comment or create new entries to the database.</p>
     <form name="registrationForm" action="/register" method="POST">
         <input class="form-control" type="text" name="username" maxlength="12" placeholder="Username">
         <input class="form-control" type="password" name="password" placeholder="Password">
+        <div class="g-recaptcha" data-sitekey="6LfrrY8UAAAAALc2FPEaipBIjL1NveQEjpgWv-U8"></div>
         <button class="btn-dark btn-block">Submit</button>
     </form>
     <hr>
     <h4 class="text-center"><a href="/login">already registered?</a></h4>
-
 </div>
 
 <body OnLoad="document.registrationForm.username.focus();">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <% }; %>
+
     <!-- Footer File -->
     <% include partials/footer %>
     <!-- Footer File -->
