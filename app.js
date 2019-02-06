@@ -9,6 +9,7 @@ const express = require("express"), //Set up express
     fs = require("fs"),
     Campground = require("./models/campground"),
     Comment = require("./models/comment"),
+    Jimp = require("jimp"), //Creating thumbnails for index
     rimraf = require("rimraf"), //To delete random folder
     randomize = require("randomatic"); //To create random folder for image
 
@@ -64,13 +65,23 @@ app.get("/campgrounds/new", (req, res) => {
 app.post("/campgrounds", (req, res) => {
     let randomFolder = randomize("Aa0", 15);
     if (Object.keys(req.files).length == 0) {
+        randomFolder = "/icons/";
         tempImage = "tent.png";
     } else {
-        let uploadPath = `public/files/${randomFolder}/${req.files.image.name}`;
+        tempImage = `${req.files.image.name}`;
+        let uploadPath = `public/files/${randomFolder}/${tempImage}`;
         req.files.image.mv(uploadPath, (err) => {
             if (err) console.log("error moving file");
         });
-        tempImage = `${randomFolder}/${req.files.image.name}`;
+        Jimp.read(uploadPath, (err, image) => {
+            if (err) console.log(err);
+            image
+                .scaleToFit(2048, 2048)
+                .write(uploadPath);
+            image
+                .scaleToFit(640, 640)
+                .write(`public/files/${randomFolder}/thumb_${tempImage}`);
+        });
     }
     let numViews = 0;
     req.body.information = req.sanitize(req.body.information); //Prevent HTML
@@ -136,11 +147,13 @@ app.put("/campgrounds/:id", (req, res) => {
 
 //Delete a campground - DESTROY
 app.delete("/campgrounds/:id", (req, res) => {
-    //Delete Image Folder
+    //Delete Image Folder unless it's in the icons folder
     Campground.findById(req.params.id, (err, foundCampground) => {
-        rimraf(`public/files/${foundCampground.randomFolder}`, (err) => {
-            if (err) console.log(err);
-        });
+        if (foundCampground.randomFolder !== "/icons/") {
+            rimraf(`public/files/${foundCampground.randomFolder}`, (err) => {
+                if (err) console.log(err);
+            });
+        }
     });
 
     //Delete Database Entry

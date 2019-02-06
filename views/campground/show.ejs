@@ -4,10 +4,10 @@
 <div class="container text-center mt-3">
     <div class="row jumbotron m-1 p-0">
         <div class="p-0 hidden-md col-lg-8">
-            <a href="/files/<%= campground.image %>" data-lightbox=" <%=campground.image %>">
-                <img class="info-page-image" src="/files/<%= campground.image %>">
+            <a href="/files/<%= campground.randomFolder %>/<%= campground.image %>" data-lightbox=" <%=campground.image %>">
+                <img class="info-page-image" src="/files/<%= campground.randomFolder %>/<%= campground.image %>">
             </a>
-            <h5 class="smallText">
+            <h5 class="smallText mr-2">
                 Added:
                 <%= campground.date.toDateString() %>
             </h5>
@@ -58,6 +58,7 @@
     </div>
 </div>
 <p class="text-center"> <a class="btn btn-dark btn-lg" href="/campgrounds">Back</a> </p>
+<% console.log(campground.randomFolder); %>
 <!-- Footer File -->
 <% include ../partials/footer %>
 <!-- Footer File -->
