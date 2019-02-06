@@ -3,6 +3,10 @@
 <!-- Header File -->
 
 <div class="container text-center p-2">
+    <% if(!currentUser || currentUser.username !== campground.owner) { %>
+    <h1 class="text-center">Unauthorized</h1>
+    <p>You aren't authorized to edit this post</p>
+    <% } else { %>
     <h1 class="text-center p-2 headFoot"> Edit
         <%= campground.name %>
     </h1>
@@ -20,6 +24,7 @@
             </p>
             <button class="button btn-sm btn-dark btn-block">Submit!</button>
         </form>
+        <% }; %>
         <hr>
         <form action="/campgrounds/<%= campground._id %>" method="GET">
             <button class=" button btn.sm btn-dark btn-block">Back</button>

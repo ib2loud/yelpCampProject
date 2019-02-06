@@ -8,7 +8,8 @@
                 <img class="info-page-image" src="/files/<%= campground.randomFolder %>/<%= campground.image %>">
             </a>
             <h5 class="smallText mr-2">
-                Added:
+                Added By:
+                <%= campground.owner %> -
                 <%= campground.date.toDateString() %>
             </h5>
         </div>
@@ -26,20 +27,32 @@
             </p>
             <p>
                 <%- campground.information %>
+                <% if(!currentUser) {} else{ %>
+                <% if(currentUser.username == campground.owner) { %>
                 <div class="text-right mb-1">
                     <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-sm btn-success">edit</a>
                     <form id="deleteForm" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST" class="text-right mb-1 mr-1 p-0">
                         <button class="btn btn-sm btn-danger">delete</button>
                     </form>
                 </div>
+                <% }}; %>
             </p>
         </div>
         <div class="container">
+            <% if(!currentUser) { %>
+            <p><strong>Please login or register to post comments</strong></p>
+            <% } else { %>
             <form action="/campgrounds/<%=campground._id%>/comments" method="POST">
-                <input type="text" name="comment[author]" placeholder="Name" maxlength="40" required>
-                <input type="text" name="comment[text]" placeholder="Comment" rows="1" required></textarea>
+                <span>
+                    <strong>
+                        <%= currentUser.username %>:
+                    </strong>
+                </span>
+                <!-- <input type="text" name="comment[author]" placeholder="Name" maxlength="40" required> -->
+                <input type="text" name="comment[text]" placeholder="Comment" rows="1" maxlength="100" required></textarea>
                 <button class="button btn-sm btn-dark">Submit!</button>
             </form>
+            <% }; %>
         </div>
         <ul class="m-0 text-left container list-unstyled">
             <hr>
@@ -50,7 +63,8 @@
                 </strong>
                 <%= comment.text %>
                 <span class="smallText">
-                    <%= comment.date.toDateString(); %></span>
+                    <%= comment.date.toDateString(); %>
+                </span>
                 <hr>
             </li>
             <% }); %>

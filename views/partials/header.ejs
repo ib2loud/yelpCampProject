@@ -15,6 +15,14 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="/"><img id="navLogo" src="/assets/images/logos/nopic.png"><strong>yelpCamp</strong></a>
+            <span class="text-left">
+                Hello
+                <% if(!currentUser) { %>
+                Guest
+                <% } else { %>
+                <%= currentUser.username %>
+                <% }; %>
+            </span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,9 +36,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/campgrounds">Campgrounds</a>
                     </li>
+                    <% if (currentUser) {%>
                     <li class="nav-item">
                         <a class="nav-link" href="/campgrounds/new">Add New Campground</a>
                     </li>
+                    <% }; %>
+                    <% if(!currentUser) { %>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,10 +55,12 @@
                                     placeholder="Password">
                                 <button class="btn-dark float-right m-1">Login</button>
                             </form>
-                            <a class="dropdown-item" href="/logout" type="POST">Logout</a>
                             <a class="dropdown-item" href="/register">Register</a>
                         </div>
                     </li>
+                    <% } else { %>
+                    <a class="nav-link" href="/logout" type="POST">Logout</a>
+                    <% }; %>
                 </ul>
             </div>
     </nav>

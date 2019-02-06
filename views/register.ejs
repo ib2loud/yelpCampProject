@@ -3,14 +3,18 @@
 <!-- Header File -->
 <div class="container newCampgroundForm">
     <h4 class="text-center">Sign up</h4>
+    <p class="text-center">Please register or login to comment or create new entries to the database.</p>
     <form name="registrationForm" action="/register" method="POST">
-        <input class="form-control" type="text" name="username" placeholder="Username">
+        <input class="form-control" type="text" name="username" maxlength="12" placeholder="Username">
         <input class="form-control" type="password" name="password" placeholder="Password">
         <button class="btn-dark btn-block">Submit</button>
     </form>
+    <hr>
+    <h4 class="text-center"><a href="/login">already registered?</a></h4>
+
 </div>
 
-<body OnLoad="document.registration.username.focus();">
+<body OnLoad="document.registrationForm.username.focus();">
     <!-- Footer File -->
     <% include partials/footer %>
     <!-- Footer File -->
