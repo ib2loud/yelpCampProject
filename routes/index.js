@@ -3,6 +3,7 @@ const express = require("express"),
     passport = require("passport"),
     User = require("../models/user");
 
+
 //Home page
 router.get("/", (req, res) => {
     res.render("landing");
