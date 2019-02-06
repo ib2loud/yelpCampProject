@@ -1,6 +1,6 @@
 {
   "name": "yelpcampproject",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "This is a project for Colt Steele's Udemy bootcamp",
   "main": "app.js",
   "scripts": {
@@ -19,11 +19,25 @@
     "express": "^4.16.4",
     "express-fileupload": "^1.1.1-alpha.1",
     "express-sanitizer": "^1.0.5",
+    "express-session": "^1.15.6",
     "jimp": "^0.6.0",
     "method-override": "^3.0.0",
     "mongoose": "^5.4.8",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^5.0.1",
     "randomatic": "^3.1.1",
     "rimraf": "^2.6.3",
-    "sharp": "^0.21.3"
-  }
+    "sharp": "^0.21.3",
+    "universal-toast": "^0.6.5"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ib2loud/yelpCampProject.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ib2loud/yelpCampProject/issues"
+  },
+  "homepage": "https://github.com/ib2loud/yelpCampProject#readme"
 }

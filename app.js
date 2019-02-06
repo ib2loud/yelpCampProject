@@ -1,41 +1,74 @@
 //This is yelpCamp!
 const express = require("express"), //Set up express
     app = express(),
+    passport = require("passport"),
+    LocalStrategy = require("passport-local"),
+    passportLocalMongoose = require("passport-local-mongoose"),
+    User = require("./models/user"),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
     methodOverride = require("method-override"),
     expressSanitizer = require("express-sanitizer"),
     fileUpload = require("express-fileupload"),
-    fs = require("fs"),
     Campground = require("./models/campground"),
     Comment = require("./models/comment"),
+    Toast = require("universal-toast"), //Toasts
     Jimp = require("jimp"), //Creating thumbnails for index
     rimraf = require("rimraf"), //To delete random folder
     randomize = require("randomatic"); //To create random folder for image
 
-//Live Server
-mongoose.connect("mongodb+srv://bremy23:bremy23yelpcamp@cluster0-uqjcu.azure.mongodb.net/test?retryWrites=true", {
-    useNewUrlParser: true
-})
+// //Live Server
+// mongoose.connect("mongodb+srv://bremy23:bremy23yelpcamp@cluster0-uqjcu.azure.mongodb.net/test?retryWrites=true", {
+//     useNewUrlParser: true
+// })
 
 //Local Server
-// mongoose.connect("mongodb://localhost:27017/yelp_camp", {
-//     useNewUrlParser: true
-// });
+mongoose.connect("mongodb://localhost:27017/yelp_camp", {
+    useNewUrlParser: true
+});
 
 mongoose.set("useFindAndModify", false);
+
+//Set up file uploader
 app.use(fileUpload({
     createParentPath: true
-})); //Set up file uploader
+}));
+
+//Set up encoding
+app.use(require("express-session")({
+    secret: "Life is good",
+    resave: false,
+    saveUninitialized: false
+}));
 
 app.use(methodOverride("_method")); //Allow FORM to PUT
+
+//Set up body-parser
 app.use(bodyParser.urlencoded({
     extended: true
-})); //Set up body-parser
+}));
+
+//Set up passport for user auth
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use(express.static(__dirname + "/public")); //Set static folder for assets
 app.set("view engine", "ejs"); //Set rendering image
 app.use(expressSanitizer()); //prevent HTML in input
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+};
+
+//======================
+// ROUTES
+//======================
 
 //Home page
 app.get("/", (req, res) => {
@@ -57,8 +90,41 @@ app.get("/campgrounds", (req, res) => {
 });
 
 //Creation form - NEW
-app.get("/campgrounds/new", (req, res) => {
-    res.render("campground/new.ejs");
+app.get("/campgrounds/new", isLoggedIn, (req, res) => {
+    res.render("campground/new");
+});
+
+//Registration Routes
+app.get("/register", (req, res) => {
+    res.render("register");
+});
+
+app.post("/register", (req, res) => {
+    User.register(new User({
+        username: req.body.username
+    }), req.body.password, (err, user) => {
+        if (err) {
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req, res, () => {
+            res.redirect("/campgrounds");
+        });
+    });
+});
+
+//Login / Logout Routes
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+app.post("/login", passport.authenticate("local", {
+    successRedirect: "/campgrounds",
+    failureRedirect: "/register"
+}), (req, res) => {});
+
+app.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect("/");
 });
 
 //Create new campground - CREATE

@@ -37,13 +37,15 @@
                             Login
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <form action="/campgrounds" encType="multipart/form-data" method="POST">
-                                <input class="form-control dropdown-item border-bottom" type="text" placeholder="Username">
-                                <input class="form-control dropdown-item border-bottom" type="password" placeholder="Password">
-                                <button class="float-right m-1">Submit</button>
+                            <form action="/login" method="POST">
+                                <input class="form-control dropdown-item border-bottom" name="username" type="text"
+                                    placeholder="Username">
+                                <input class="form-control dropdown-item border-bottom" name="password" type="password"
+                                    placeholder="Password">
+                                <button class="btn-dark float-right m-1">Login</button>
                             </form>
-                            <a class="dropdown-item" href="#" hidden>Logout</a>
-                            <a class="dropdown-item" href="#">Register</a>
+                            <a class="dropdown-item" href="/logout" type="POST">Logout</a>
+                            <a class="dropdown-item" href="/register">Register</a>
                         </div>
                     </li>
                 </ul>
