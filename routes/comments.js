@@ -3,16 +3,10 @@ const express = require("express"),
         mergeParams: true
     }),
     Campground = require("../models/campground"),
+    middleware = require("../middleware"),
     Comment = require("../models/comment.js");
 
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-};
-
-router.post("/", isLoggedIn, (req, res) => {
+router.post("/", middleware.isLoggedIn, (req, res) => {
     Campground.findById(req.params.id, (err, campground) => {
         if (err) {
             console.log(err);

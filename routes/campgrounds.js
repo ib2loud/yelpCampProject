@@ -1,6 +1,8 @@
 const express = require("express"),
     router = express.Router(),
+    middleware = require("../middleware"),
     Campground = require("../models/campground"),
+    Comment = require("../models/comment"),
     randomize = require("randomatic"), //To create random folder for image
     expressSanitizer = require("express-sanitizer"),
     Jimp = require("jimp"), //Creating thumbnails for index
@@ -9,14 +11,6 @@ const express = require("express"),
 
 
 router.use(expressSanitizer()); //prevent HTML in input
-
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-};
-
 
 //Show all campgrounds - INDEX
 router.get("/", (req, res) => {
@@ -28,16 +22,17 @@ router.get("/", (req, res) => {
             res.render("campground/index", {
                 campgrounds: allCampgrounds,
             });
+
         }
     });
 });
 
 //Creation form - NEW
-router.get("/new", isLoggedIn, (req, res) => {
+router.get("/new", middleware.isLoggedIn, (req, res) => {
     res.render("campground/new");
 });
 //Create new campground - CREATE
-router.post("/", isLoggedIn, (req, res) => {
+router.post("/", middleware.isLoggedIn, (req, res) => {
     let randomFolder = randomize("Aa0", 15); //Create radom folder to prevent image duplicates
     if (Object.keys(req.files).length == 0) { //Show default image if none is uploaded
         randomFolder = "/icons/";
@@ -125,7 +120,7 @@ router.put("/:id", (req, res) => {
 });
 
 //Delete a campground - DESTROY
-router.delete("/:id", isLoggedIn, (req, res) => {
+router.delete("/:id", middleware.isLoggedIn, (req, res) => {
 
     Campground.findById(req.params.id, (err, foundCampground) => {
         //Check to see user is owner
@@ -134,6 +129,16 @@ router.delete("/:id", isLoggedIn, (req, res) => {
             if (foundCampground.randomFolder !== "/icons/") {
                 rimraf(`public/files/${foundCampground.randomFolder}`, (err) => {
                     if (err) console.log(err);
+                });
+            }
+            //Delete Comments
+            if (foundCampground.comments.length > 0) {
+                foundCampground.comments.forEach((comment) => {
+                    Comment.findOneAndDelete({
+                        _id: comment._id,
+                    }, (err) => {
+
+                    });
                 });
             }
             //Delete Database Entry
@@ -146,6 +151,7 @@ router.delete("/:id", isLoggedIn, (req, res) => {
             res.send("You shouldn't be here.");
         }
     });
+
 });
 
 module.exports = router;

@@ -8,15 +8,16 @@ const express = require("express"), //Set up express
     LocalStrategy = require("passport-local"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
+
     fileUpload = require("express-fileupload"); //For image uploading
 
 //Declare routes
-const commentRoutes = require("./routes/comments.js"),
-    campgroundRoutes = require("./routes/campgrounds.js"),
-    indexRoutes = require("./routes/index.js"),
-    Campground = require("./models/campground.js"),
-    Comment = require("./models/comment.js"),
-    User = require("./models/user.js");
+const commentRoutes = require("./routes/comments"),
+    campgroundRoutes = require("./routes/campgrounds"),
+    indexRoutes = require("./routes"),
+    Campground = require("./models/campground"),
+    Comment = require("./models/comment"),
+    User = require("./models/user");
 
 // //Live Server
 // mongoose.connect("mongodb+srv://bremy23:bremy23yelpcamp@cluster0-uqjcu.azure.mongodb.net/test?retryWrites=true", {

@@ -29,15 +29,15 @@
             <% }; %>
             <p>
                 <%- campground.information %>
-                <% if(!currentUser) {} else{ %>
-                <% if(currentUser.username == campground.owner) { %>
+
+                <% if(currentUser && currentUser.username == campground.owner) { %>
                 <div class="text-right mb-1">
                     <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-sm btn-warning">edit</a>
                     <form id="deleteForm" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST" class="text-right mb-1 mr-1 p-0">
-                        <button class="btn btn-sm btn-danger">delete</button>
+                        <input type="submit" value="delete" class="btn btn-sm btn-danger">
                     </form>
                 </div>
-                <% }}; %>
+                <% }; %>
             </p>
         </div>
         <div class="container">
@@ -52,9 +52,8 @@
                         <%= currentUser.username %>:
                     </strong>
                 </span>
-                <!-- <input type="text" name="comment[author]" placeholder="Name" maxlength="40" required> -->
                 <input type="text" name="comment[text]" placeholder="Comment" rows="1" maxlength="100" required></textarea>
-                <button class="button btn-sm btn-dark">Submit!</button>
+                <input type="submit" value="Submit" class="button btn-sm btn-dark">
             </form>
             <% }; %>
         </div>
