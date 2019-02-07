@@ -19,15 +19,15 @@ const commentRoutes = require("./routes/comments"),
     Comment = require("./models/comment"),
     User = require("./models/user");
 
-// //Live Server
-// mongoose.connect("mongodb+srv://bremy23:bremy23yelpcamp@cluster0-uqjcu.azure.mongodb.net/test?retryWrites=true", {
-//     useNewUrlParser: true
-// })
-
-//Local Server
-mongoose.connect("mongodb://localhost:27017/yelp_camp", {
+//Live Server
+mongoose.connect("mongodb+srv://bremy23:bremy23yelpcamp@cluster0-uqjcu.azure.mongodb.net/test?retryWrites=true", {
     useNewUrlParser: true
-});
+})
+
+// //Local Server
+// mongoose.connect("mongodb://localhost:27017/yelp_camp", {
+//     useNewUrlParser: true
+// });
 
 mongoose.set("useFindAndModify", false);
 
