@@ -125,7 +125,6 @@ router.put("/:id", (req, res) => {
 
 //Delete a campground - DESTROY
 router.delete("/:id", middleware.isLoggedIn, (req, res) => {
-
     Campground.findById(req.params.id, (err, foundCampground) => {
         //Check to see user is owner
         if (foundCampground.owner == req.user.username || req.user.username == "Brad") {
@@ -156,7 +155,6 @@ router.delete("/:id", middleware.isLoggedIn, (req, res) => {
             res.send("You shouldn't be here.");
         }
     });
-
 });
 
 module.exports = router;

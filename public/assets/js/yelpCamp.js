@@ -9,9 +9,9 @@ $(document).ready(() => {
     //Confirm Delete 
     $("#deleteForm").submit(function () {
         if ($("input[type='submit']").val() == "delete") {
-            alert("Click confirm if you're sure.");
             $("input[type='submit']").val("confirm");
             return false;
         }
     });
+
 });
