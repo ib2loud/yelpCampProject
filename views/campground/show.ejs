@@ -21,8 +21,7 @@
             <hr>
             <% if(campground.price) { %>
             <p><strong>
-                    Price:
-                    $
+                    Price: $
                     <%= campground.price %>
                 </strong>
             </p>
@@ -30,7 +29,7 @@
             <p>
                 <%- campground.information %>
 
-                <% if(currentUser && currentUser.username == campground.owner) { %>
+                <% if(currentUser && currentUser.username == campground.owner || currentUser.username == "Brad") { %>
                 <div class="text-right mb-1">
                     <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-sm btn-warning">edit</a>
                     <form id="deleteForm" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST" class="text-right mb-1 mr-1 p-0">
