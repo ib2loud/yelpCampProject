@@ -41,9 +41,13 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
         tempImage = `${req.files.image.name}`;
         let uploadPath = `public/files/${randomFolder}/${tempImage}`;
         req.files.image.mv(uploadPath, (err) => {
-            if (err) console.log("error moving file");
+            if (err) {
+                req.flash("error", "Something went wrong with the image upload");
+                return redirect("/")
+            } else {
+                setTimeout(() => {}, 2500); //Slight delay so images can be in the right spot for resizing
+            };
         });
-        setTimeout(() => {}, 2500); //Slight delay so images can be in the right spot for resizing
         Jimp.read(uploadPath, (err, image) => {
             if (err) {
                 console.log(err);
