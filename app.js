@@ -6,9 +6,10 @@ const express = require("express"), //Set up express
     mongoose = require("mongoose"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
+    session = require("express-session"),
+    flash = require("connect-flash"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
-
     fileUpload = require("express-fileupload"); //For image uploading
 
 //Declare routes
@@ -31,6 +32,7 @@ mongoose.connect("mongodb+srv://bremy23:bremy23yelpcamp@cluster0-uqjcu.azure.mon
 
 mongoose.set("useFindAndModify", false);
 
+
 //Set up file uploader
 app.use(fileUpload({
     createParentPath: true
@@ -47,8 +49,11 @@ app.use(bodyParser.urlencoded({
 app.use(require("express-session")({
     secret: "Life is good",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
+
+//Set up flash
+app.use(flash());
 
 //Set up passport for user auth
 app.use(passport.initialize());
@@ -58,6 +63,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 

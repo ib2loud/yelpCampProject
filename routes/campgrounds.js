@@ -9,7 +9,6 @@ const express = require("express"),
     rimraf = require("rimraf"), //To delete random folder
     User = require("../models/user");
 
-
 router.use(expressSanitizer()); //prevent HTML in input
 
 //Show all campgrounds - INDEX
@@ -17,6 +16,7 @@ router.get("/", (req, res) => {
     //Get all camps from db
     Campground.find({}, (err, allCampgrounds) => {
         if (err) {
+            req.flash("error", "Something went wrong!");
             console.log(err)
         } else {
             res.render("campground/index", {
@@ -43,12 +43,13 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
         req.files.image.mv(uploadPath, (err) => {
             if (err) console.log("error moving file");
         });
+        setTimeout(() => {}, 1000); //Slight delay so images can be in the right spot for resizing
         Jimp.read(uploadPath, (err, image) => {
             if (err) {
                 console.log(err);
             } else {
                 image
-                    .scaleToFit(2048, 2048)
+                    .scaleToFit(1200, 1200)
                     .write(uploadPath);
                 image
                     .scaleToFit(640, 640)
@@ -72,6 +73,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
         if (err) {
             console.log(err);
         } else {
+            req.flash("success", "Created Successfully!")
             res.redirect("/campgrounds");
         }
     });
@@ -81,6 +83,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 router.get("/:id", (req, res) => {
     Campground.findById(req.params.id).populate("comments").exec((err, foundCampground) => {
         if (err) {
+            req.flash("error", "Something went wrong!");
             res.redirect("/campgrounds");
         } else {
             foundCampground.views++;
@@ -114,6 +117,7 @@ router.put("/:id", (req, res) => {
         if (err) {
             console.log(err);
         } else {
+            req.flash("success", "Edited Successfully!");
             res.redirect(`/campgrounds/${req.params.id}`);
         }
     });
@@ -145,6 +149,7 @@ router.delete("/:id", middleware.isLoggedIn, (req, res) => {
             Campground.findOneAndDelete({
                 _id: req.params.id,
             }, (err) => {
+                req.flash("success", "Deleted Successfully!")
                 res.redirect("/campgrounds");
             });
         } else {

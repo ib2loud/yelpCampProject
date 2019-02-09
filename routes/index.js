@@ -3,7 +3,6 @@ const express = require("express"),
     passport = require("passport"),
     User = require("../models/user");
 
-
 //Home page
 router.get("/", (req, res) => {
     res.render("landing");
@@ -20,10 +19,11 @@ router.post("/register", (req, res) => {
         username: req.body.username
     }), req.body.password, (err, user) => {
         if (err) {
-            console.log(err);
-            return res.render("register");
+            req.flash("error", err.message);
+            return res.redirect("register");
         }
         passport.authenticate("local")(req, res, () => {
+            req.flash("success", `Hello ${req.body.username}! Welcome to yelpCamp!`);
             res.redirect("/campgrounds");
         });
     });
@@ -35,11 +35,15 @@ router.get("/login", (req, res) => {
 });
 router.post("/login", passport.authenticate("local", {
     successRedirect: "/campgrounds",
-    failureRedirect: "/register"
+    successFlash: "Welcome Back",
+    failureRedirect: "/login",
+    failureFlash: true
 }), (req, res) => {});
 
 router.get("/logout", (req, res) => {
+    user = req.user.username;
     req.logout();
+    req.flash("success", `Logged out ${user}. See you soon!`);
     res.redirect("/");
 });
 
