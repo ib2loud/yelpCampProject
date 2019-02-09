@@ -1,6 +1,9 @@
 {
   "name": "yelpcampproject",
-  "version": "0.9.0",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.14.2"
+  }
   "description": "This is a project for Colt Steele's Udemy bootcamp",
   "main": "app.js",
   "scripts": {
