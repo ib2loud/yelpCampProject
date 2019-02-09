@@ -76,7 +76,7 @@ app.use(express.static(__dirname + "/public")); //Set static folder for assets
 app.set("view engine", "ejs"); //Set rendering image
 
 //Start Server
-app.listen(process.env.PORT);
+app.listen(process.env.PORT || 5000);
 
 // //Start local server
 // app.listen(3000, 'localhost');
