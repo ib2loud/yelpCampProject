@@ -8,6 +8,18 @@
     src: url("/assets/css/JosefinSans-Regular.ttf");
 }
 
+body {
+    font-family: "josefin" !important;
+    text-transform: uppercase !important;
+    background: url("/assets/images/main_background.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    overflow: hidden;
+}
+
 a {
     color: #EFEFEF;
     text-decoration: none;
@@ -21,16 +33,6 @@ a:hover {
 .btn-danger {
     font-family: "josefin" !important;
     text-transform: uppercase !important;
-}
-
-body {
-    font-family: "josefin" !important;
-    text-transform: uppercase !important;
-    background-image: url("/assets/images/main_background.jpg");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-
 }
 
 #mainPage {

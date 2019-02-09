@@ -43,7 +43,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
         req.files.image.mv(uploadPath, (err) => {
             if (err) console.log("error moving file");
         });
-        setTimeout(() => {}, 1000); //Slight delay so images can be in the right spot for resizing
+        setTimeout(() => {}, 2500); //Slight delay so images can be in the right spot for resizing
         Jimp.read(uploadPath, (err, image) => {
             if (err) {
                 console.log(err);
