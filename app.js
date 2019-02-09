@@ -75,7 +75,10 @@ app.use("/campgrounds", campgroundRoutes);
 app.use(express.static(__dirname + "/public")); //Set static folder for assets
 app.set("view engine", "ejs"); //Set rendering image
 
-//Start local server
-app.listen(3000, 'localhost');
-console.log("server started");
-//Start local server
+//Start Server
+app.listen(process.env.PORT);
+
+// //Start local server
+// app.listen(3000, 'localhost');
+// console.log("server started");
+// //Start local server
