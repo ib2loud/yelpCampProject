@@ -8,16 +8,14 @@
     src: url("/assets/css/JosefinSans-Regular.ttf");
 }
 
-body {
+body,
+html {
     font-family: "josefin" !important;
     text-transform: uppercase !important;
-    background: url("/assets/images/main_background.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    background-image: url("/assets/images/main_background.jpg");
     background-size: cover;
+    background-position: center;
     height: 100%;
-    overflow: hidden;
 }
 
 a {
