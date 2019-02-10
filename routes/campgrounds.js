@@ -33,7 +33,7 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
 });
 //Create new campground - CREATE
 router.post("/", middleware.isLoggedIn, (req, res) => {
-    tempImage = `${req.files.image.name}`;
+    let tempImage = `${req.files.image.name}`;
     let uploadPath = `public/files/${randomFolder}/${tempImage}`;
     req.files.image.mv(uploadPath, (err) => {
         if (err) {
