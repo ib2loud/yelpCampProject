@@ -10,7 +10,8 @@ const express = require("express"), //Set up express
     flash = require("connect-flash"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
-    fileUpload = require("express-fileupload"); //For image uploading
+    fileUpload = require("express-fileupload"),
+    imgur = require("imgur"); //For image uploading
 
 //Declare routes
 const commentRoutes = require("./routes/comments"),
