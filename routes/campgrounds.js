@@ -38,11 +38,29 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
         randomFolder = "/icons/";
         tempImage = "tent.png";
     } else {
-        imgur.uploadFile(req.files.image.name)
-            .then((json) => {
-                console.log(json.data.link);
-            });
-    };
+        tempImage = `${req.files.image.name}`;
+        let uploadPath = `public/files/${randomFolder}/${tempImage}`;
+        req.files.image.mv(uploadPath, (err) => {
+            if (err) {
+                req.flash("error", "Something went wrong with the image upload");
+                console.log("error moving file");
+            } else {
+                setTimeout(() => {}, 2500); //Slight delay so images can be in the right spot for resizing
+            };
+        });
+        Jimp.read(uploadPath, (err, image) => {
+            if (err) {
+                console.log(err);
+            } else {
+                image
+                    .scaleToFit(1200, 1200)
+                    .write(uploadPath);
+                image
+                    .scaleToFit(640, 640)
+                    .write(`public/files/${randomFolder}/thumb_${tempImage}`);
+            }
+        });
+    }
     let numViews = 0;
     req.body.information = req.sanitize(req.body.information); //Prevent HTML
     let newCampground = {
@@ -144,29 +162,3 @@ router.delete("/:id", middleware.isLoggedIn, (req, res) => {
 });
 
 module.exports = router;
-
-
-
-//Old Image code
-// tempImage = `${req.files.image.name}`;
-// let uploadPath = `public/files/${randomFolder}/${tempImage}`;
-// req.files.image.mv(uploadPath, (err) => {
-//     if (err) {
-//         req.flash("error", "Something went wrong with the image upload");
-//         return redirect("/")
-//     } else {
-//         setTimeout(() => {}, 4000); //Slight delay so images can be in the right spot for resizing
-//     };
-// });
-// Jimp.read(uploadPath, (err, image) => {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         image
-//             .scaleToFit(1200, 1200)
-//             .write(uploadPath);
-//         image
-//             .scaleToFit(640, 640)
-//             .write(`public/files/${randomFolder}/thumb_${tempImage}`);
-//     }
-// });
