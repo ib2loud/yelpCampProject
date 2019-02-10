@@ -21,9 +21,8 @@ const commentRoutes = require("./routes/comments"),
     User = require("./models/user");
 
 //Live Server
-mongoose.connect("mongodb+srv://bremy23:bremy23yelpcamp@cluster0-uqjcu.azure.mongodb.net/test?retryWrites=true", {
-    useNewUrlParser: true
-})
+let url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp";
+mongoose.connect(url);
 
 // //Local Server
 // mongoose.connect("mongodb://localhost:27017/yelp_camp", {
