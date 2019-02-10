@@ -129,7 +129,7 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", middleware.isLoggedIn, (req, res) => {
     Campground.findById(req.params.id, (err, foundCampground) => {
         //Check to see user is owner
-        if (foundCampground.owner == req.user.username || req.user.username == "Brad") {
+        if (foundCampground.owner == req.user.username) {
             //Delete Image Folder unless it's the icons folder
             if (foundCampground.randomFolder !== "/icons/") {
                 rimraf(`public/files/${foundCampground.randomFolder}`, (err) => {
