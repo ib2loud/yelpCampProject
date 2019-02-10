@@ -13,11 +13,16 @@ body {
     text-transform: uppercase !important;
 }
 
-#backgroundImage {
+#backgroundImageDiv {
     width: 100%;
-    height 100vh;
+    height: 100vh;
     position: absolute;
     z-index: -10;
+}
+
+#backgroundImage {
+    height: 100%;
+    width: 100%;
 }
 
 a {
