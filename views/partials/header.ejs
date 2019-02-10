@@ -14,60 +14,60 @@
 <body>
     <!-- Fixed Background Image-->
     <div id="backgroundImageDiv">
-        <img id="backgroundImage src="/assets/images/main_background.jpg"> </div> <!-- Fixed Background Image-->
-        <!-- NavBar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark sticky-top">
-            <div class="container">
-                <a class="navbar-brand" href="/"><img id="navLogo" src="/assets/images/logos/nopic.png"><strong>yelpCamp</strong></a>
-                <span class="float-left">
-                    Hello
-                    <% if(!currentUser) { %>
-                    Guest
-                    <% } else { %>
-                    <%= currentUser.username %>
-                    <% }; %>
-                </span>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <img id="backgroundImage" src="/assets/images/main_background.jpg"> </div> <!-- Fixed Background Image-->
+    <!-- NavBar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/"><img id="navLogo" src="/assets/images/logos/nopic.png"><strong>yelpCamp</strong></a>
+            <span class="float-left">
+                Hello
+                <% if(!currentUser) { %>
+                Guest
+                <% } else { %>
+                <%= currentUser.username %>
+                <% }; %>
+            </span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-md-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/campgrounds">Campgrounds</a>
-                        </li>
-                        <% if (currentUser) {%>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/campgrounds/new">Add New Campground</a>
-                        </li>
-                        <% }; %>
-                        <% if(!currentUser) { %>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Login
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <form name="registration" action="/login" method="POST">
-                                    <input class="form-control dropdown-item border-bottom" name="username" type="text"
-                                        placeholder="Username">
-                                    <input class="form-control dropdown-item border-bottom" name="password" type="password"
-                                        placeholder="Password">
-                                    <button class="btn-dark float-right m-1">Login</button>
-                                </form>
-                                <a class="dropdown-item" href="/register">Register</a>
-                            </div>
-                        </li>
-                        <% } else { %>
-                        <a class="nav-link" href="/logout" type="POST">Logout</a>
-                        <% }; %>
-                    </ul>
-                </div>
-        </nav>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-md-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/campgrounds">Campgrounds</a>
+                    </li>
+                    <% if (currentUser) {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/campgrounds/new">Add New Campground</a>
+                    </li>
+                    <% }; %>
+                    <% if(!currentUser) { %>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Login
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <form name="registration" action="/login" method="POST">
+                                <input class="form-control dropdown-item border-bottom" name="username" type="text"
+                                    placeholder="Username">
+                                <input class="form-control dropdown-item border-bottom" name="password" type="password"
+                                    placeholder="Password">
+                                <button class="btn-dark float-right m-1">Login</button>
+                            </form>
+                            <a class="dropdown-item" href="/register">Register</a>
+                        </div>
+                    </li>
+                    <% } else { %>
+                    <a class="nav-link" href="/logout" type="POST">Logout</a>
+                    <% }; %>
+                </ul>
+            </div>
+    </nav>
     </div>
     <!-- NavBar -->
     <!-- Flash Warnings -->
