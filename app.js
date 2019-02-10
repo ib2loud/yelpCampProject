@@ -10,8 +10,7 @@ const express = require("express"), //Set up express
     flash = require("connect-flash"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
-    fileUpload = require("express-fileupload"),
-    imgur = require("imgur"); //For image uploading
+    fileUpload = require("express-fileupload"); //For image uploading
 
 //Declare routes
 const commentRoutes = require("./routes/comments"),
@@ -76,10 +75,10 @@ app.use("/campgrounds", campgroundRoutes);
 app.use(express.static(__dirname + "/public")); //Set static folder for assets
 app.set("view engine", "ejs"); //Set rendering image
 
-//Start Server
-app.listen(process.env.PORT || 5000);
+// //Start Server
+// app.listen(process.env.PORT || 5000);
 
-// //Start local server
-// app.listen(3000, 'localhost');
-// console.log("server started");
-// //Start local server
+//Start local server
+app.listen(3000, 'localhost');
+console.log("server started");
+//Start local server
