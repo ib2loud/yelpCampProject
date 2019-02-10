@@ -78,7 +78,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
             }
         });
 
-    }, 10000); //Delay for uploading image
+    }, 12000); //Delay for uploading image
 });
 
 //Show more information - SHOW
