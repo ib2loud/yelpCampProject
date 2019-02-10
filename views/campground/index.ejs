@@ -10,8 +10,9 @@
         <% campgrounds.forEach((campground) => { %>
         <div class="col-sm-12 col-lg-4">
             <div class="card mb-3">
-                <% if(campground.image !== "/icons/tent.png") { %>
-                <% campground.image = string.replace(/.{4}$/,'l'); %>
+                <% console.log(campground.image); %>
+                <% if(campground.image !== "/files/icons/thumb_tent.png") { %>
+                <% campground.image = campground.image.replace(/.{4}$/,'l.jpg'); %>
                 <% }; %>
                 <img class="card-img-top" src="<%= campground.image %>">
                 <div class="card-title mb-0">

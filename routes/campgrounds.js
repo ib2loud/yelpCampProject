@@ -37,7 +37,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
     let randomFolder = randomize("Aa0", 15); //Create radom folder to prevent image duplicates
     if (Object.keys(req.files).length == 0) { //Show default image if none is uploaded
         randomFolder = "/icons/";
-        tempImage = "/icons/tent.png";
+        tempImage = "/files/icons/thumb_tent.png";
     } else {
         tempImage = `${req.files.image.name}`;
         let uploadPath = `public/files/${randomFolder}/${tempImage}`;
