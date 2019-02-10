@@ -7,9 +7,7 @@ const express = require("express"),
     expressSanitizer = require("express-sanitizer"),
     Jimp = require("jimp"), //Creating thumbnails for index
     rimraf = require("rimraf"), //To delete random folder
-    User = require("../models/user"),
-    fs = require("fs"),
-    imgurUploader = require("imgur-uploader"); //File Uploading
+    User = require("../models/user"); //File Uploading
 
 router.use(expressSanitizer()); //prevent HTML in input
 
@@ -35,27 +33,28 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
 });
 //Create new campground - CREATE
 router.post("/", middleware.isLoggedIn, (req, res) => {
-    let tempImage = `${req.files.image.name}`;
-    let randomFolder = randomize("Aa0", 15); //Create radom folder to prevent image duplicates
-    if (Object.keys(req.files).length == 0) { //Show default image if none is uploaded
-        randomFolder = "/icons/";
-        tempImage = "/icons/tent.png";
-    } else {
-        let uploadPath = `public/files/${randomFolder}/${tempImage}`;
-        req.files.image.mv(uploadPath, (err) => {
-            if (err) {
-                req.flash("error", "Something went wrong with the image upload");
-                return redirect("/")
-            } else {
-                imgurUploader(fs.readFileSync(uploadPath), {
-                    title: "yelpCamp picture"
-                }).then(imgLink => {
-                    console.log(imgLink.link);
-                    tempImage = imgLink.link;
-                });
-            };
-        })
-    };
+    tempImage = `${req.files.image.name}`;
+    let uploadPath = `public/files/${randomFolder}/${tempImage}`;
+    req.files.image.mv(uploadPath, (err) => {
+        if (err) {
+            req.flash("error", "Something went wrong with the image upload");
+            return redirect("/")
+        } else {
+            setTimeout(() => {}, 4000); //Slight delay so images can be in the right spot for resizing
+        };
+    });
+    Jimp.read(uploadPath, (err, image) => {
+        if (err) {
+            console.log(err);
+        } else {
+            image
+                .scaleToFit(1200, 1200)
+                .write(uploadPath);
+            image
+                .scaleToFit(640, 640)
+                .write(`public/files/${randomFolder}/thumb_${tempImage}`);
+        }
+    });
     let numViews = 0;
     req.body.information = req.sanitize(req.body.information); //Prevent HTML
     let newCampground = {
@@ -161,25 +160,3 @@ module.exports = router;
 
 
 //Old Image code
-// tempImage = `${req.files.image.name}`;
-// let uploadPath = `public/files/${randomFolder}/${tempImage}`;
-// req.files.image.mv(uploadPath, (err) => {
-//     if (err) {
-//         req.flash("error", "Something went wrong with the image upload");
-//         return redirect("/")
-//     } else {
-//         setTimeout(() => {}, 4000); //Slight delay so images can be in the right spot for resizing
-//     };
-// });
-// Jimp.read(uploadPath, (err, image) => {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         image
-//             .scaleToFit(1200, 1200)
-//             .write(uploadPath);
-//         image
-//             .scaleToFit(640, 640)
-//             .write(`public/files/${randomFolder}/thumb_${tempImage}`);
-//     }
-// });
