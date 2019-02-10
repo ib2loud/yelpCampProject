@@ -21,7 +21,7 @@ const commentRoutes = require("./routes/comments"),
     User = require("./models/user");
 
 //Live Server
-let url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp";
+let url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp"; //Hide database info
 mongoose.connect(url);
 
 // //Local Server
