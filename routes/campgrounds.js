@@ -45,7 +45,9 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
                 req.flash("error", "Something went wrong with the image upload");
                 return redirect("/")
             } else {
-                setTimeout(() => {}, 2500); //Slight delay so images can be in the right spot for resizing
+                setTimeout(() => {
+                    console.log("waiting");
+                }, 4000); //Slight delay so images can be in the right spot for resizing
             };
         });
         Jimp.read(uploadPath, (err, image) => {
