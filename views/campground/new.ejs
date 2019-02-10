@@ -12,7 +12,6 @@
                     maxlength="40" required>
                 <input class="form-control" type="number" name="price" placeholder="Price" maxlength="8">
                 <textarea class="form-control" name="information" placeholder="Information" rows="8"></textarea>
-                <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
                 Upload Image (8MB MAX!): <input id="file" type="file" accept="image/*" name="image">
             </p>
             <button class="button btn-sm btn-dark btn-block">Submit!</button>
@@ -27,7 +26,7 @@
     var uploadField = document.getElementById("file");
 
     uploadField.onchange = function () {
-        if (this.files[0].size > 2097152) {
+        if (this.files[0].size >= 8388608) {
             alert("File is too big!");
             this.value = "";
         };
